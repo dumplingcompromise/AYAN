@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@coinbase/onchainkit": "^0.35.2",
+    "@supabase/supabase-js": "^2.49.4",
     "framer-motion": "^11.10.0",
     "lucide": "^0.447.0",
     "lucide-react": "^0.447.0",

@@ -4,6 +4,7 @@ import { NEXT_PUBLIC_URL } from '../config';
 import './global.css';
 import '@coinbase/onchainkit/styles.css';
 import dynamic from 'next/dynamic';
+import Header from '../components/Header'
 
 const OnchainProviders = dynamic(
   () => import('src/components/OnchainProviders'),
@@ -33,7 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex items-center justify-center">
-        <OnchainProviders>{children}</OnchainProviders>
+        <OnchainProviders>
+            <Header />
+          {children}</OnchainProviders>
       </body>
     </html>
   );
