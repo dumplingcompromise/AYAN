@@ -34,6 +34,7 @@ export default function ResponsesDisplay() {
       rows
         .filter(r =>
           r.how_response === 'I feel much worse' ||
+          r.how_response === 'I feel about the same' ||
           r.how_response === 'I feel worse'
         )
         .map(r => ({ ...r, x: Math.random() * 80 + 10 })),
@@ -44,8 +45,8 @@ export default function ResponsesDisplay() {
     () =>
       rows
         .filter(r =>
-          r.how_response === 'I feel better' ||
-          r.how_response === 'I feel much better'
+          r.how_response === 'I feel lighter' ||
+          r.how_response === 'I feel insightful'
         )
         .map(r => ({ ...r, x: Math.random() * 80 + 10 })),
     [rows]
@@ -54,8 +55,8 @@ export default function ResponsesDisplay() {
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
       {[
-        { title: 'What NPCs said', items: npcs },
-        { title: 'What humans said', items: humans }
+        { title: 'What NPCs have said', items: npcs },
+        { title: 'What humans have said', items: humans }
       ].map(({ title, items }, col) => (
         <div key={col} className="relative h-96 overflow-hidden border p-2">
           <h3 className="text-lg font-bold mb-2">{title}</h3>

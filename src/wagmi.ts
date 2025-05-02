@@ -23,7 +23,7 @@ export function useWagmiConfig() {
       [
         {
           groupName: 'Recommended Wallet',
-          wallets: [coinbaseWallet],
+          wallets: [metaMaskWallet, coinbaseWallet,rainbowWallet],
         },
         {
           groupName: 'Other Wallets',

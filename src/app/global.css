@@ -77,3 +77,20 @@ a {
 .templateSection > div {
   max-width: 100%;
 }
+
+/* globals.css or a component‑specific stylesheet */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;   /* ensures it fills without distortion */
+  z-index: -1;         /* sit behind other elements */
+}
+
+.content {
+  position: relative;  /* so it sits above the video */
+  z-index: 1;
+  /* your usual layout styles… */
+}
