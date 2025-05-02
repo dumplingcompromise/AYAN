@@ -4,6 +4,9 @@ import { useEffect, useState, useMemo } from 'react'
 import { supabase } from '../lib/supabase'
 import { motion } from 'framer-motion'
 
+
+
+
 interface ResponseRow {
   how_response: string
   what_response: string
@@ -53,13 +56,27 @@ export default function ResponsesDisplay() {
   )
 
   return (
-    <div className="grid grid-cols-2 gap-4 p-4">
+    <div className="grid grid-cols-2 gap-6 p-6">
       {[
-        { title: 'What NPCs have said', items: npcs },
-        { title: 'What humans have said', items: humans }
+        { title: 'What NPCs Have Said', items: npcs },
+        { title: 'What Humans Have Said', items: humans }
       ].map(({ title, items }, col) => (
-        <div key={col} className="relative h-96 overflow-hidden border p-2">
-          <h3 className="text-lg font-bold mb-2">{title}</h3>
+        <div
+          key={col}
+          className="
+            relative h-96 overflow-hidden
+            bg-white bg-opacity-80
+            backdrop-blur-sm
+            rounded-lg
+            shadow-md
+            border
+            border-gray-200
+            p-4
+          "
+        >
+          <h3 className="text-xl font-semibold text-gray-800 mb-3 tracking-wide border-b pb-2">
+            {title}
+          </h3>
           {items.map((r, i) => (
             <motion.p
               key={`${col}-${i}`}
@@ -77,7 +94,7 @@ export default function ResponsesDisplay() {
                 left: `${r.x}%`,
                 whiteSpace: 'nowrap',
               }}
-              className="text-sm"
+              className="text-sm text-gray-700 font-medium"
             >
               {r.what_response}
             </motion.p>

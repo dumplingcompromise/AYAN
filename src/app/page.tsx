@@ -1,41 +1,33 @@
+// src/app/page.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useAccount } from 'wagmi'
+import { useRouter } from 'next/navigation'
+import Screen1 from '../components/Screen1'
 
-import Screen1     from '../components/Screen1'
-import GateConnect from '../components/GateConnect'
-import ChoiceGate  from '../components/ChoiceGate'
-import Mindfulness from '../components/Mindfulness'
-
-export default function Page() {
-  const [step, setStep] = useState<'start'|'connect'|'gate'|'mind'>('start')
-  const { isConnected, address } = useAccount()
-
-  // If user is already connected, show gate; otherwise show connect
-  useEffect(() => {
-    if (step === 'connect' && isConnected) {
-      setStep('gate')
-    }
-  }, [step, isConnected])
+export default function HomePage() {
+  const router = useRouter()
 
   return (
-    <>
-      {step === 'start' && (
-        <Screen1 onNext={() => setStep('connect')} />
-      )}
+    <div className="relative h-screen w-full">
+      {/* full‑screen video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/ayan_bg.mp4" type="video/mp4" />
+        {/* fallback if no video */}
+      </video>
 
-      {step === 'connect' && (
-        <GateConnect onConnect={() => setStep('gate')} />
-      )}
+      {/* semi‑transparent overlay for contrast */}
+      {/* <div className="absolute inset-0 bg-black/40" /> */}
 
-      {step === 'gate' && (
-        <ChoiceGate onNext={() => setStep('mind')} />
-      )}
-
-      {step === 'mind' && address && (
-        <Mindfulness address={address} />
-      )}
-    </>
+      {/* your Screen1 UI */}
+      <div className="relative z-10 flex items-center justify-center h-full">
+        <Screen1 onNext={() => router.push('/connect')} />
+      </div>
+    </div>
   )
 }
