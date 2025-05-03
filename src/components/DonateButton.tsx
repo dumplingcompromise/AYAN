@@ -38,8 +38,17 @@ export default function DonateButton({
       onStatus={handleStatus}
     >
       <TransactionButton
-        text="Donate 0.00001 ETH"
-        className={`w-full px-4 py-2 bg-blue-600 text-white rounded ${className}`}
+        text="Donate 0.0001 ETH"
+                className={`
+          w-full px-4 py-2
+          bg-gray-100 text-black
+          border-2 border-black
+          rounded-lg
+          hover:bg-black hover:text-white
+          disabled:opacity-50 disabled:cursor-not-allowed
+          transition-colors duration-200
+          ${className}
+        `}
       />
     </Transaction>
   )
