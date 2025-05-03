@@ -1,53 +1,56 @@
-'use client';
-import { connectorsForWallets } from '@rainbow-me/rainbowkit';
-import {
-  coinbaseWallet,
-  metaMaskWallet,
-  rainbowWallet,
-} from '@rainbow-me/rainbowkit/wallets';
-import { useMemo } from 'react';
-import { http, createConfig } from 'wagmi';
-import { base, baseSepolia } from 'wagmi/chains';
-import { NEXT_PUBLIC_WC_PROJECT_ID } from './config';
+// // src/wagmi.ts
+// 'use client'
 
-export function useWagmiConfig() {
-  const projectId = NEXT_PUBLIC_WC_PROJECT_ID ?? '';
-  if (!projectId) {
-    const providerErrMessage =
-      'To connect to all Wallets you need to provide a NEXT_PUBLIC_WC_PROJECT_ID env variable';
-    throw new Error(providerErrMessage);
-  }
+// import { useMemo } from 'react'
+// import { configureChains, createConfig } from 'wagmi'
+// import { base, baseSepolia } from 'wagmi/chains'
+// import { publicProvider } from 'wagmi/providers/public'
+// import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+// import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+// import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+// import { NEXT_PUBLIC_WC_PROJECT_ID } from './config'
 
-  return useMemo(() => {
-    const connectors = connectorsForWallets(
-      [
-        {
-          groupName: 'Recommended Wallet',
-          wallets: [metaMaskWallet, coinbaseWallet,rainbowWallet],
-        },
-        {
-          groupName: 'Other Wallets',
-          wallets: [rainbowWallet, metaMaskWallet],
-        },
-      ],
-      {
-        appName: 'onchainkit',
-        projectId,
-      },
-    );
+// export function useWagmiConfig() {
+//   const projectId = NEXT_PUBLIC_WC_PROJECT_ID ?? ''
+//   if (!projectId) {
+//     throw new Error(
+//       'To use WalletConnect you need to provide NEXT_PUBLIC_WC_PROJECT_ID'
+//     )
+//   }
 
-    const wagmiConfig = createConfig({
-      chains: [base, baseSepolia],
-      // turn off injected provider discovery
-      multiInjectedProviderDiscovery: false,
-      connectors,
-      ssr: true,
-      transports: {
-        [base.id]: http(),
-        [baseSepolia.id]: http(),
-      },
-    });
+//   return useMemo(() => {
+//     // 1) configure chains + provider
+//     const { chains, publicClient } = configureChains(
+//       [base, baseSepolia],
+//       [publicProvider()]
+//     )
 
-    return wagmiConfig;
-  }, [projectId]);
-}
+//     // 2) set up connectors
+//     const connectors = [
+//       new MetaMaskConnector({ chains }),
+//       new CoinbaseWalletConnector({
+//         chains,
+//         options: { appName: 'YourAppName' },
+//       }),
+//       new WalletConnectConnector({
+//         chains,
+//         options: {
+//           projectId,
+//           metadata: {
+//             name: 'YourAppName',
+//             description: 'Your app description',
+//             url: window.location.origin,
+//             icons: [],
+//           },
+//         },
+//       }),
+//     ]
+
+//     // 3) create and return the Wagmi config
+//     return createConfig({
+//       autoConnect: true,
+//       publicClient,
+//       connectors,
+//     })
+//   }, [projectId])
+// }

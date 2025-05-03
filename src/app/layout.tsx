@@ -8,6 +8,15 @@ import '@coinbase/onchainkit/styles.css'
 import dynamic from 'next/dynamic'
 import Header from '../components/Header'
 
+
+import { Major_Mono_Display } from 'next/font/google'
+
+const majorMono = Major_Mono_Display({
+  subsets: ['latin'],       
+  weight: '400',            
+  display: 'swap',          
+})
+
 const OnchainProviders = dynamic(
   () => import('src/components/OnchainProviders'),
   { ssr: false }
@@ -19,11 +28,11 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Base Profile',
-  description: 'Built with OnchainKit',
+  title: 'Are you an NPC?',
+  description: 'Are you?',
   openGraph: {
-    title: 'Base Profile',
-    description: 'Built with OnchainKit',
+    title: 'Are you an NPC?',
+    description: 'Are you?',
     images: [`${NEXT_PUBLIC_URL}/vibes/vibes-19.png`],
   },
 }
@@ -50,7 +59,7 @@ export default function RootLayout({
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
             src="/ayan_bg.mp4"           
-            poster="/ayan_bg.jpg"        
+            poster="/bg.svg"        
           />
 
           {/* 

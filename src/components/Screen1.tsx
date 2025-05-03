@@ -9,11 +9,11 @@ interface Screen1Props {
 const Screen1: FC<Screen1Props> = ({ onNext }) => (
   <div className="flex flex-col items-center justify-center h-screen space-y-6">
     {/* Page title */}
-    <h1 className="text-5xl font-bold">
+    <h1 className="text-5xl font-bold font-displayMono">
       Are you an NPC?
     </h1>
     {/* Challenge prompt */}
-    <h2 className="text-4xl font-semibold">
+    <h2 className="text-4xl font-semibold font-displayMono">
       Take the challenge to find out.
     </h2>
     <button

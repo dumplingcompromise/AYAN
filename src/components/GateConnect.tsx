@@ -22,11 +22,12 @@ export default function GateConnect({ onConnect }: GateConnectProps) {
     <div className="flex flex-col items-center justify-center h-screen">
       <p className="mb-4">Please connect your wallet to proceed</p>
       <Wallet>
-        <ConnectWallet>
-          <button className="px-4 py-2 bg-black text-white rounded">
-            Connect Wallet
-          </button>
-        </ConnectWallet>
+      <ConnectWallet>
+       
+         <div className="px-4 py-2 bg-black text-white rounded cursor-pointer">
+           Connect Wallet
+         </div>
+       </ConnectWallet>
       </Wallet>
     </div>
   )

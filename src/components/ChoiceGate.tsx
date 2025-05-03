@@ -60,7 +60,7 @@ export default function ChoiceGate({ onNext }: ChoiceGateProps) {
       {/* 50/50 Header */}
       <div className="flex w-full">
         <div className="w-1/2 pr-6">
-          <h2 className="text-3xl font-semibold leading-snug">
+          <h2 className="text-3xl font-semibold leading-snug font-style: italic">
             No good things in life are free.<br/>
             To find salvation, a toll must pay thee.
           </h2>

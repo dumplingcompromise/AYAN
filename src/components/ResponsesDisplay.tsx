@@ -56,7 +56,7 @@ export default function ResponsesDisplay() {
   )
 
   return (
-    <div className="grid grid-cols-2 gap-6 p-6">
+    <div className="grid grid-cols-2 gap-6 p-6 font-displayMono">
       {[
         { title: 'What NPCs Have Said', items: npcs },
         { title: 'What Humans Have Said', items: humans }

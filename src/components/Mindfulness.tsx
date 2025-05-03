@@ -1,8 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, MouseEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import ResponsesDisplay from './ResponsesDisplay'
+import { NFTMintCardDefault } from '@coinbase/onchainkit/nft'
+import { motion, AnimatePresence } from 'framer-motion'
+
 
 interface MindfulnessProps {
   address: string
@@ -15,6 +18,11 @@ export default function Mindfulness({ address }: MindfulnessProps) {
   const [how, setHow]   = useState('')
   const [what, setWhat] = useState('')
 
+   // ─── Overlay animation state ───────────────────────────
+   const [beginPos,   setBeginPos]   = useState<{ x: number; y: number }|null>(null)
+   const [expanding,  setExpanding]  = useState(false)
+ 
+
   // Countdown effect only runs when phase === 'timer'
   useEffect(() => {
     if (phase !== 'timer') return
@@ -25,6 +33,14 @@ export default function Mindfulness({ address }: MindfulnessProps) {
     const id = setInterval(() => setTimeLeft(t => t - 1), 1000)
     return () => clearInterval(id)
   }, [phase, timeLeft])
+
+
+  const handleBeginClick = (e: MouseEvent<HTMLButtonElement>) => {
+    // grab the button center
+    const rect = e.currentTarget.getBoundingClientRect()
+    setBeginPos({ x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 })
+    setExpanding(true)
+  }
 
   const handleSubmit = async () => {
     const { error } = await supabase
@@ -45,37 +61,61 @@ export default function Mindfulness({ address }: MindfulnessProps) {
   if (phase === 'ready') {
     return (
       <div className="flex flex-col items-center justify-center h-screen space-y-6">
-        <h2 className="text-3xl font-semibold text-center">
-            The challenge has but one task<br/>
+        <h2 className="text-3xl font-semibold text-center font-style: italic font-displayMono">
+            This challenge has but one task<br/>
             To do nothing is what I ask<br/>
             ~<br/>
             Can you sit for 30 minutes and be still?<br/>
             Do you hear the silent voice within?<br/>
             ~<br/>
-            If you truly believe that you're alive<br/>
+            If you believe that you're alive<br/>
             press Begin and let's find out
             </h2>
         <button
           className="px-6 py-3 bg-black text-white rounded"
-          onClick={() => setPhase('timer')}
+          onClick={handleBeginClick} 
         >
-          Start
+          Begin
         </button>
+         {/* Overlay expansion */}
+         <AnimatePresence>
+        {expanding && beginPos && (
+          <motion.div
+            key="overlay"
+            className="fixed inset-0 bg-black z-20"
+            // start as a tiny circle at button center
+            initial={{ clipPath: `circle(0px at ${beginPos.x}px ${beginPos.y}px)` }}
+            // expand to cover entire viewport
+            animate={{ clipPath: `circle(150% at ${beginPos.x}px ${beginPos.y}px)` }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
+            onAnimationComplete={() => {
+              setExpanding(false)
+              setPhase('timer')
+            }}
+          />
+        )}
+        </AnimatePresence>
       </div>
     )
   }
 
   // 1) Timer screen
   if (phase === 'timer') {
-    const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0')
-    const secs = String(timeLeft % 60).padStart(2, '0')
-    return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-6">
-        <h2 className="text-3xl font-semibold">Time remaining</h2>
-        <div className="text-6xl font-mono">{mins}:{secs}</div>
-      </div>
-    )
-  }
+       const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0')
+       const secs = String(timeLeft % 60).padStart(2, '0')
+       return (
+         <div className="relative h-screen w-full overflow-hidden">
+           {/* full‑screen black background */}
+           <div className="absolute inset-0 bg-black" />
+    
+           {/* timer content in front */}
+           <div className="relative flex flex-col items-center justify-center h-full space-y-6 text-white">
+             <h2 className="text-3xl font-semibold">Time remaining</h2>
+             <div className="text-6xl font-mono">{mins}:{secs}</div>
+           </div>
+         </div>
+       )
+     }
 
   // 2) Form screen
  // inside Mindfulness.tsx…
@@ -178,26 +218,43 @@ if (phase === 'form') {
   ])
   const userIsNpc = npcLabels.has(how)
 
+  const NPC_CONTRACT   = '0x8eaa5d3811d1238c494ae8fb2eb053f00d6d3695' as `0x${string}`
+  const HUMAN_CONTRACT = '0xeaec557e19d9d97873f51c9ea6e888cb5bc66be7' as `0x${string}`
+
+
   // 3) Complete screen
   return (
     <div className="px-4 py-6 space-y-6">
       <div className="flex flex-col items-center justify-center space-y-2">
         {userIsNpc ? (
-          <h2 className="text-2xl font-semibold text-red-600">
+          <h2 className="text-2xl font-semibold text-red-600 font-displayMono">
             Looks like you’re an NPC. So sorry.
           </h2>
         ) : (
-          <h2 className="text-2xl font-semibold text-green-600">
+          <h2 className="text-2xl font-semibold text-green-600 font-displayMono">
             Looks like you’re a human. The world needs you.
           </h2>
         )}
-        <p className="text-gray-700">
+        <p className="text-gray-700 font-displayMono">
           Here’s what everyone else has shared, too:
         </p>
       </div>
 
       {/* Ephemeral two-column animated feed */}
       <ResponsesDisplay />
+      {/* NFT Mint Section */}
+
+{/* <div className="max-w-md mx-auto my-8 p-6 bg-white bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg">
+  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+    {userIsNpc
+      ? 'Your NPC Tribute NFT Awaits'
+      : 'Claim Your Human Honor NFT'}
+  </h3>
+
+  <NFTMintCardDefault
+    contractAddress={userIsNpc ? NPC_CONTRACT : HUMAN_CONTRACT}
+  />
+</div> */}
     </div>
   )
 }
