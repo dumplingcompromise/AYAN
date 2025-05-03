@@ -52,15 +52,11 @@ export default function RootLayout({
         */}
         <div className="relative w-screen h-screen">
           {/* Video absolutely fills the container, behind everything */}
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            src="/ayan_bg.mp4"           
-            poster="/bg.svg"        
-          />
+          <img
+    src="/bg4.svg"
+    alt="Background"
+    className="absolute inset-0 w-full h-full object-cover"
+  />
 
           {/* 
             Everything else sits on top of the video,

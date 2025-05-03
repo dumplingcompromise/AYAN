@@ -58,20 +58,18 @@ export default function ChoiceGate({ onNext }: ChoiceGateProps) {
   return (
     <div className="p-12 max-w-2xl mx-auto space-y-12">
       {/* 50/50 Header */}
-      <div className="flex w-full">
-        <div className="w-1/2 pr-6">
-          <h2 className="text-3xl font-semibold leading-snug font-style: italic">
-            No good things in life are free.<br/>
-            To find salvation, a toll must pay thee.
-          </h2>
-        </div>
-        <div className="w-1/2 pl-6">
-          <img
-            src="/portrait.png"
-            alt="Portrait"
-            className="w-full h-80 object-cover rounded-md"
-          />
-        </div>
+      <div className="w-full flex justify-center mb-8">
+      <img
+   src="/no_good.png"
+   alt="No good things in life are free – portrait"
+   className="
+     w-full max-w-2xl h-auto object-contain rounded-lg
+     shadow-lg     /* ← adds a large box‑shadow */
+     hover:shadow-2xl  /* ← optional: bigger on hover */
+     transition-shadow
+     duration-200
+   "
+     />
       </div>
 
       {/* Subheading */}

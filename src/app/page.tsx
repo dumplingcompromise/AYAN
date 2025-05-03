@@ -10,16 +10,12 @@ export default function HomePage() {
   return (
     <div className="relative h-screen w-full">
       {/* full‑screen video background */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source src="/ayan_bg.mp4" type="video/mp4" />
-        {/* fallback if no video */}
-      </video>
+      <img
+    src="/bg4.svg"
+    alt="Background"
+    className="absolute inset-0 w-full h-full object-cover"
+  />
+  
 
       {/* semi‑transparent overlay for contrast */}
       {/* <div className="absolute inset-0 bg-black/40" /> */}

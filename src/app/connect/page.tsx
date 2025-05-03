@@ -10,7 +10,7 @@ export default function ConnectPage() {
   return (
     <div
       className="relative h-screen w-full bg-white bg-no-repeat bg-center bg-cover"
-      style={{ backgroundImage: "url('/bg.svg')" }}
+      style={{ backgroundImage: "url('/bg4.svg')" }}
     >
       {/* slight white overlay to ensure legibility */}
       <div className="absolute inset-0 bg-white/80" />
