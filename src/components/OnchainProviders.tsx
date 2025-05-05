@@ -1,14 +1,15 @@
 // src/components/OnchainProviders.tsx
 'use client'
 
-import { OnchainKitProvider } from '@coinbase/onchainkit'
+// import { OnchainKitProvider } from '@coinbase/onchainkit'
 import type { ReactNode } from 'react'
 import { base } from 'viem/chains'
+import { MiniKitProvider } from '@coinbase/onchainkit/minikit'
 
 export default function OnchainProviders({ children }: { children: ReactNode }) {
   
   return (
-    <OnchainKitProvider
+    <MiniKitProvider
       projectId={process.env.NEXT_PUBLIC_CDP_PROJECT_ID!}
       apiKey={process.env.NEXT_PUBLIC_CDP_API_KEY!}
       chain={base}
@@ -34,6 +35,6 @@ export default function OnchainProviders({ children }: { children: ReactNode }) 
       }}
     >
       {children}
-    </OnchainKitProvider>
+    </MiniKitProvider>
   )
 }

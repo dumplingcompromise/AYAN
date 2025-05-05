@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjE4NzcxMywidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDRiMTQ5MjI0NTRCMGQ3OTM2MDQwOWMwQzliZmZlOTNCOTM1N2E5MjYifQ",
+    "payload": "eyJkb21haW4iOiJheWFuLWVjcnUudmVyY2VsLmFwcCJ9",
+    "signature": "MHgzMWIwYzk2YjA0OGU4NGM2MzE5ZWU4NDJlNzIyNzc0NTkwMmRhNTY3NzBlODlhOThiNDQ5OTNiNGU3ZTk5NjIxNTdiOTYyZjFmNWVlMTRkMmFiZGRhOTU2ODk4NWIxZGVkNjRlMGE2MGViOWU0YWNlNTViZGZkNTk2N2VlMDhhMjFj"
+  },
+  "frame": {
+    "version": "1",
+    "name": "Are you an NPC?",
+    "iconUrl": "https://ayan-ecru.vercel.app/icon.png",
+    "homeUrl": "https://ayan-ecru.vercel.app",
+    "imageUrl": "https://ayan-ecru.vercel.app/image.png",
+    "buttonTitle": "Check this out",
+    "splashImageUrl": "https://ayan-ecru.vercel.app/splash.png",
+    "splashBackgroundColor": "#eeccff",
+    "webhookUrl": "https://ayan-ecru.vercel.app/api/webhook"
+  }
+    }
