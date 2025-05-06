@@ -4,7 +4,9 @@
 // import { OnchainKitProvider } from '@coinbase/onchainkit'
 import type { ReactNode } from 'react'
 import { base } from 'viem/chains'
+
 import { MiniKitProvider } from '@coinbase/onchainkit/minikit'
+
 
 export default function OnchainProviders({ children }: { children: ReactNode }) {
   
