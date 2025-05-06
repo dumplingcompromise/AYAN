@@ -1,10 +1,11 @@
 // src/components/OnchainProviders.tsx
 'use client'
 
-import { OnchainKitProvider } from '@coinbase/onchainkit'
+// import { OnchainKitProvider } from '@coinbase/onchainkit'
 import type { ReactNode } from 'react'
 import { base } from 'viem/chains'
-import { MiniKitProvider } from '@coinbase/onchainkit/minikit';
+
+import { MiniKitProvider } from '@coinbase/onchainkit/minikit'
 
 
 export default function OnchainProviders({ children }: { children: ReactNode }) {
