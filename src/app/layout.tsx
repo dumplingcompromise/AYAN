@@ -6,6 +6,8 @@ import PageTransition from '../components/PageTransition'
 import Script from 'next/script'
 import { Major_Mono_Display } from 'next/font/google'
 import type { Metadata } from 'next'
+import MiniKitReady from '../components/MiniKitReady'
+
 import {
   NEXT_PUBLIC_URL,
   NEXT_PUBLIC_GA_ID,
@@ -95,6 +97,7 @@ export default function RootLayout({
           {/* app UI */}
           <div className="relative z-10 flex flex-col h-full">
             <OnchainProviders>
+            <MiniKitReady />
               <Header />
               <PageTransition>
                 <main className="flex-1 overflow-auto">
