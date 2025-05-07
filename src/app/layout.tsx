@@ -1,5 +1,3 @@
-'use client'
-
 import './global.css'
 import '@coinbase/onchainkit/styles.css'
 import dynamic from 'next/dynamic'
@@ -57,7 +55,6 @@ export const metadata: Metadata = {
     images: [`${NEXT_PUBLIC_URL}/vibes/vibes-19.png`],
   },
   other: {
-    // This emits: <meta name="fc:frame" content="{…stringified…}" />
     'fc:frame': JSON.stringify(fcFrame),
   },
 }
