@@ -16,7 +16,7 @@ interface DonateButtonProps {
 
 const RECEIVER = '0xAB24620dCA851f82427639A6c80c03C00ED18995' as `0x${string}`
 // ≈0.00001 ETH
-const DONATION_VALUE = parseEther('0.00001')
+const DONATION_VALUE = parseEther('0.00005')
 
 export default function DonateButton({
   onStatus,
@@ -38,7 +38,7 @@ export default function DonateButton({
       onStatus={handleStatus}
     >
       <TransactionButton
-        text="Donate 0.0001 ETH"
+        text="Donate 0.0005 ETH"
                 className={`
           w-full px-4 py-2
           bg-gray-100 text-black

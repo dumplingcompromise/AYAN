@@ -1,7 +1,7 @@
 // src/components/ChoiceGate.tsx
 'use client'
 
-import { useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useAccount, useBlockNumber, useBalance } from 'wagmi'
 import { base } from 'viem/chains'
 import type { LifecycleStatus } from '@coinbase/onchainkit/transaction'
@@ -28,9 +28,10 @@ export default function ChoiceGate({ onNext }: ChoiceGateProps) {
   })
   const holdsThreshold = (tokenBal?.value ?? 0n) >= HOLD_THRESHOLD
 
-  // local state
-  const [donated, setDonated] = useState(false)
-  const [held, setHeld]       = useState(false)
+  // local UI state
+  const [donated, setDonated]       = useState(false)
+  const [held, setHeld]             = useState(false)
+  const [showTradeModal, setShow]   = useState(false)
 
   // donation handler
   const handleDonateStatus = useCallback(
@@ -43,13 +44,13 @@ export default function ChoiceGate({ onNext }: ChoiceGateProps) {
     [onNext]
   )
 
-  // hold handler
+  // hold handler: either advance or pop modal
   const handleHold = () => {
     if (holdsThreshold) {
       setHeld(true)
       onNext()
     } else {
-      alert('You need to hold at least 1,000,000 SEMI tokens to proceed.')
+      setShow(true)
     }
   }
 
@@ -57,7 +58,7 @@ export default function ChoiceGate({ onNext }: ChoiceGateProps) {
 
   return (
     <div className="p-12 max-w-2xl mx-auto space-y-12">
-      {/* Header image */}
+      {/* ─── Header image (unchanged) ─────────────────────────── */}
       <div className="w-full flex justify-center mb-8">
         <img
           src="/no_good.png"
@@ -69,47 +70,50 @@ export default function ChoiceGate({ onNext }: ChoiceGateProps) {
         />
       </div>
 
-      {/* Subheading */}
+      {/* ─── Subheading ───────────────────────────────────────── */}
       <div className="text-center">
-        <h3 className="text-xl font-medium">Choose how you tribute</h3>
+      <h3 className="text-xl font-medium">
+          Support the next dev experiment
+        </h3><br/>
+        <p className="text-sm text-gray-600">
+          All proceeds help fund future projects and community development.
+        </p>
       </div>
 
-      {/* Buttons with “OR” */}
-      <div className="flex items-center justify-center gap-4">
+      {/* ─── Buttons with “OR” ─────────────────────────────────── */}
+      <div className="flex items-stretch justify-center gap-4">
         <div className="flex-1">
           <DonateButton onStatus={handleDonateStatus} />
         </div>
 
-        <span className="text-sm font-medium text-gray-700">OR</span>
+        <span className="text-sm font-medium text-gray-700 self-center">OR</span>
 
         <div className="flex-1">
-                    <button
-              onClick={handleHold}
-              disabled={held}
-              className="
-                w-full px-4 py-2
-                bg-gray-100 text-black
-                border-2 border-black
-                rounded-lg
-                hover:bg-black hover:text-white
-                disabled:opacity-50 disabled:cursor-not-allowed
-                transition-colors duration-200
-              "
-            >
-              {held ? 'Held ✔️' : 'Hold 1 000 000 SEMI tokens'}
-            </button>
+          <button
+            onClick={handleHold}
+            disabled={held}
+            className="
+              w-full px-4 py-2
+              bg-gray-100 text-black
+              border-2 border-black
+              rounded-lg
+              hover:bg-black hover:text-white
+              disabled:opacity-50 disabled:cursor-not-allowed
+              transition-colors duration-200
+            "
+          >
+            {held ? 'Held ✔️' : 'Hold 1M SEMI tokens'}
+          </button>
         </div>
       </div>
 
-      {/* Checklist */}
+      {/* ─── Checklist ────────────────────────────────────────── */}
       <ul className="list-disc pl-5 space-y-1">
-        <li>{donated ? '✅' : '❌'} Donated 0.00001 ETH</li>
-        <li>
-          {holdsThreshold || held ? '✅' : '❌'} Holds ≥ 1 000 000 SEMI tokens
-        </li>
+        <li>{donated ? '✅' : '❌'} Donated 0.00005 ETH</li>
+        <li>{holdsThreshold || held ? '✅' : '❌'} Holds ≥ 1 000 000 SEMI tokens</li>
       </ul>
 
-      {/* Proceed */}
+      {/* ─── Proceed ──────────────────────────────────────────── */}
       {eligible && (
         <button
           onClick={onNext}
@@ -123,6 +127,38 @@ export default function ChoiceGate({ onNext }: ChoiceGateProps) {
         >
           Proceed
         </button>
+      )}
+
+      {/* ─── Trade Modal ───────────────────────────────────────── */}
+      {showTradeModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={() => setShow(false)}
+        >
+          <div
+            className="bg-white rounded-lg p-6 max-w-sm w-full relative"
+            onClick={e => e.stopPropagation()}
+          >
+            <h2 className="text-xl font-semibold mb-2">Need more SEMI?</h2>
+            <p className="mb-4">
+              You need at least <strong>1 000 000 SEMI</strong> to proceed.
+            </p>
+            <a
+              href="https://app.uniswap.org/explore/tokens/base/0x265fb8d9d850be033dc7e98403edff97d3fafb07"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-lg mb-2"
+            >
+              Trade on Uniswap
+            </a>
+            <button
+              onClick={() => setShow(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
       )}
     </div>
   )

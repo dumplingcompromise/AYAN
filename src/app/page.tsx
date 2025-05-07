@@ -19,11 +19,11 @@ export default function HomePage() {
   return (
     <div className="relative h-screen w-full">
       {/* full‑screen background */}
-      <img
+      {/* <img
         src="/bg4.svg"
         alt="Background"
         className="absolute inset-0 w-full h-full object-cover"
-      />
+      /> */}
 
       {/* main content */}
       <div className="relative z-10 flex items-center justify-center h-full">

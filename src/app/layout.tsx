@@ -1,20 +1,19 @@
 // src/app/layout.tsx
 
-import type { Metadata } from 'next'
-import { NEXT_PUBLIC_URL } from '../config'
-
 import './global.css'
 import '@coinbase/onchainkit/styles.css'
 import dynamic from 'next/dynamic'
 import Header from '../components/Header'
-
-
+import PageTransition from '../components/PageTransition'
+import Script from 'next/script'
 import { Major_Mono_Display } from 'next/font/google'
+import type { Metadata } from 'next'
+import { NEXT_PUBLIC_URL, NEXT_PUBLIC_GA_ID } from '../config'
 
 const majorMono = Major_Mono_Display({
-  subsets: ['latin'],       
-  weight: '400',            
-  display: 'swap',          
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
 })
 
 const OnchainProviders = dynamic(
@@ -43,31 +42,43 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={majorMono.className}>
+      <head>
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${NEXT_PUBLIC_GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${NEXT_PUBLIC_GA_ID}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body className="overflow-hidden">
-        {/* 
-          Single stacking context container:
-          - relative so children z-index works predictably 
-          - full viewport 
-        */}
+        {/* full‑screen stacking context */}
         <div className="relative w-screen h-screen">
-          {/* Video absolutely fills the container, behind everything */}
+          {/* background image/video */}
           <img
-    src="/bg4.svg"
-    alt="Background"
-    className="absolute inset-0 w-full h-full object-cover"
-  />
+            src="/bg4.svg"
+            alt="Background"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
 
-          {/* 
-            Everything else sits on top of the video,
-            via a positive z-index 
-          */}
+          {/* main app UI overlaid */}
           <div className="relative z-10 flex flex-col h-full">
             <OnchainProviders>
               <Header />
-              <main className="flex-1 overflow-auto">
-                {children}
-              </main>
+              <PageTransition>
+                <main className="flex-1 overflow-auto">
+                  {children}
+                </main>
+              </PageTransition>
             </OnchainProviders>
           </div>
         </div>
