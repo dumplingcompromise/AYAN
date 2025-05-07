@@ -5,7 +5,7 @@
       "signature": "MHgzMWIwYzk2YjA0OGU4NGM2MzE5ZWU4NDJlNzIyNzc0NTkwMmRhNTY3NzBlODlhOThiNDQ5OTNiNGU3ZTk5NjIxNTdiOTYyZjFmNWVlMTRkMmFiZGRhOTU2ODk4NWIxZGVkNjRlMGE2MGViOWU0YWNlNTViZGZkNTk2N2VlMDhhMjFj"
     },
     "frame": {
-      "version": "1",
+      "version": "vNext", 
       "name": "Are you an NPC?",
       "iconUrl": "https://ayan-ecru.vercel.app/icon.png",
       "homeUrl": "https://ayan-ecru.vercel.app",
