@@ -1,4 +1,4 @@
-// src/app/layout.tsx
+'use client'
 
 import './global.css'
 import '@coinbase/onchainkit/styles.css'
@@ -8,7 +8,17 @@ import PageTransition from '../components/PageTransition'
 import Script from 'next/script'
 import { Major_Mono_Display } from 'next/font/google'
 import type { Metadata } from 'next'
-import { NEXT_PUBLIC_URL, NEXT_PUBLIC_GA_ID } from '../config'
+import {
+  NEXT_PUBLIC_URL,
+  NEXT_PUBLIC_GA_ID,
+  NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
+  NEXT_PUBLIC_ICON_URL,
+  NEXT_PUBLIC_IMAGE_URL,
+  NEXT_PUBLIC_BUTTON_TITLE,
+  NEXT_PUBLIC_SPLASH_IMAGE_URL,
+  NEXT_PUBLIC_SPLASH_BACKGROUND_COLOR,
+  NEXT_PUBLIC_MANIFEST_VERSION,
+} from '../config'
 
 const majorMono = Major_Mono_Display({
   subsets: ['latin'],
@@ -26,13 +36,29 @@ export const viewport = {
   initialScale: 1.0,
 }
 
+// Build the Farcaster <meta fc:frame> payload
+const fcFrame = {
+  version: NEXT_PUBLIC_MANIFEST_VERSION,
+  name: NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
+  iconUrl: NEXT_PUBLIC_ICON_URL,
+  homeUrl: NEXT_PUBLIC_URL,
+  imageUrl: NEXT_PUBLIC_IMAGE_URL,
+  buttonTitle: NEXT_PUBLIC_BUTTON_TITLE,
+  splashImageUrl: NEXT_PUBLIC_SPLASH_IMAGE_URL,
+  splashBackgroundColor: `#${NEXT_PUBLIC_SPLASH_BACKGROUND_COLOR}`,
+}
+
 export const metadata: Metadata = {
-  title: 'Are you an NPC?',
+  title: NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
   description: 'Are you?',
   openGraph: {
-    title: 'Are you an NPC?',
+    title: NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
     description: 'Are you?',
     images: [`${NEXT_PUBLIC_URL}/vibes/vibes-19.png`],
+  },
+  other: {
+    // This emits: <meta name="fc:frame" content="{…stringified…}" />
+    'fc:frame': JSON.stringify(fcFrame),
   },
 }
 
@@ -61,16 +87,15 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="overflow-hidden">
-        {/* full‑screen stacking context */}
         <div className="relative w-screen h-screen">
-          {/* background image/video */}
+          {/* background */}
           <img
             src="/bg4.svg"
             alt="Background"
             className="absolute inset-0 w-full h-full object-cover"
           />
 
-          {/* main app UI overlaid */}
+          {/* app UI */}
           <div className="relative z-10 flex flex-col h-full">
             <OnchainProviders>
               <Header />
