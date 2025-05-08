@@ -38,14 +38,18 @@ export const viewport = {
 
 // Build the Farcaster <meta fc:frame> payload
 const fcFrame = {
-  version: NEXT_PUBLIC_MANIFEST_VERSION,
-  name: NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
-  iconUrl: NEXT_PUBLIC_ICON_URL,
-  homeUrl: NEXT_PUBLIC_URL,
+  version: "next",
   imageUrl: NEXT_PUBLIC_IMAGE_URL,
-  buttonTitle: NEXT_PUBLIC_BUTTON_TITLE,
-  splashImageUrl: NEXT_PUBLIC_SPLASH_IMAGE_URL,
-  splashBackgroundColor: `#${NEXT_PUBLIC_SPLASH_BACKGROUND_COLOR}`,
+  button: {
+    title: NEXT_PUBLIC_BUTTON_TITLE,
+    action: {
+      type: "launch_frame",
+      url: NEXT_PUBLIC_URL,
+      name: NEXT_PUBLIC_ONCHAINKIT_PROJECT_NAME,
+      splashImageUrl: NEXT_PUBLIC_SPLASH_IMAGE_URL,
+      splashBackgroundColor: `#${NEXT_PUBLIC_SPLASH_BACKGROUND_COLOR}`,
+    },
+  },
 }
 
 export const metadata: Metadata = {
